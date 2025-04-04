@@ -24,6 +24,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "ch03/ex15/index.js"],
   "exclude": ["node_modules"]
 }
