@@ -4,7 +4,6 @@ test('should correctly destructure an array of objects in TypeScript', () => {
     { x: 3, y: 4 },
   ];
 
-  // 正しい分割代入
   const [{ x: x1, y: y1 }, { x: x2, y: y2 }] = points;
 
   expect(x1).toBe(1);

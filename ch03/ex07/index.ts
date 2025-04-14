@@ -1,3 +1,5 @@
+// node --loader ts-node/esm ch03/ex07/index.ts
+
 export const equalArrays = (a: any, b: any): boolean => {
   if (a === b) return true;
   if (a.length !== b.length) return false;

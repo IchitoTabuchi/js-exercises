@@ -1,24 +1,34 @@
-const sym1: symbol = Symbol('mySymbol');
-const sym2: symbol = Symbol('mySymbol');
+const obj1: any = { x: 1 };
 
-const obj = {
-  [sym1]: 'Value for Sym1',
-  [sym2]: 'Value for sym2',
+obj1.y = 2;
+
+console.log(obj1);
+
+const obj2 = { x: 1, y: 2 };
+
+console.log(obj1 === obj2);
+
+export const equals = (a: any, b: any): boolean => {
+  if (a === b) return true;
+
+  if (
+    a === null ||
+    b === null ||
+    typeof a !== 'object' ||
+    typeof b !== 'object'
+  )
+    return false;
+
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+
+  if (keysA.length !== keysB.length) return false;
+
+  for (const key of keysA) {
+    if (!keysB.includes(key)) return false;
+
+    if (!equals(a[key], b[key])) return false;
+  }
+
+  return true;
 };
-
-console.log(obj[sym1]);
-console.log(obj[sym2]);
-
-console.log(sym1 === sym2);
-
-const globalSym1: symbol = Symbol.for('mySymbol');
-const globalSym2: symbol = Symbol.for('mySymbol');
-
-const globalObj = {
-  [globalSym1]: 'Global value',
-};
-
-console.log(globalObj[globalSym1]);
-console.log(globalObj[globalSym2]);
-
-console.log(globalSym1 === globalSym2);
