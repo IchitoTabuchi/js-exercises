@@ -14,9 +14,20 @@ export const slice = (
   start: number = 0,
   end: number = str.length
 ): string => {
-  start = start < 0 ? Math.max(str.length + start, 0) : start;
-  end = end < 0 ? Math.max(str.length + end, 0) : end;
-  return str.slice(start, end);
+  const length = str.length;
+
+  start = Math.floor(Number.isNaN(start) ? 0 : start);
+  end = Math.floor(Number.isNaN(end) ? 0 : end);
+
+  start = start < 0 ? Math.max(length + start, 0) : Math.min(start, length);
+  end = end < 0 ? Math.max(length + end, 0) : Math.min(end, length);
+
+  if (end < start) return '';
+
+  let result = '';
+  for (let i = start; i < end; i++) result += str[i];
+
+  return result;
 };
 
 // export const padStart = (
