@@ -2,7 +2,7 @@
 
 export const add = (x: number, y: number): number => {
   // 繰り上がりが無くなるまで実行
-  while (!!y) [x, y] = [x ^ y, (x & y) << 1]; // x: 繰り上がりなしの和、y: 繰り上がり
+  while (y) [x, y] = [x ^ y, (x & y) << 1]; // x: 繰り上がりなしの和、y: 繰り上がり
   return x;
 };
 

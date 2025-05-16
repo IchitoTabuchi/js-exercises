@@ -54,3 +54,5 @@ describe('safeJsonParse', () => {
       expect(result.error).toMatch(/Unexpected token|Unexpected string/);
   });
 });
+
+// エラーのメッセージはモジュールや関数などで変わるので、テストで合っているか判定するのはあまりよくない。
