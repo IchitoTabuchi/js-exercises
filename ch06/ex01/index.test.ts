@@ -76,4 +76,16 @@ describe('HashTable', () => {
     expect(ht.get('c')).toBeUndefined();
     expect(ht.size).toBe(2);
   });
+  it('should detect key collision (different keys hashed to same bucket)', () => {
+    const ht = newHashTable(1); // 強制的にすべてのキーが index 0 に入るようにする
+    ht.put('key1', 'value1');
+    ht.put('key2', 'value2');
+
+    // 同じインデックスに2つの異なるキーが格納された（= 衝突が起きた）
+    expect(ht.get('key1')).toBe('value1');
+    expect(ht.get('key2')).toBe('value2');
+    expect(ht.size).toBe(2);
+
+    // 衝突が解決されている（同じバケットに複数のキーがあるが、正しく取得できる）
+  });
 });
