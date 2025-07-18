@@ -1,10 +1,10 @@
-export function withResource<T extends { close: () => void }, R>(
+export const withResource = <T extends { close: () => void }>(
   resource: T,
-  fn: (res: T) => R
-): R {
+  fn: (res: T) => void
+): void => {
   try {
-    return fn(resource);
+    fn(resource); // 実行するだけなのでreturn不要
   } finally {
     resource.close();
   }
-}
+};

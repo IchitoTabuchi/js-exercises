@@ -7,3 +7,5 @@ export function f(body: string) {
     replacedBody.startsWith('{') ? replacedBody : `return (${replacedBody});`
   ) as (...args: any[]) => any;
 }
+
+// `$$(i+1)`のようにすると、aに変換しなくても計算可能`

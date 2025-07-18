@@ -31,4 +31,15 @@ describe('instanceOf', () => {
     const n = new Number(5);
     expect(instanceOf(n, String)).toBe(false);
   });
+
+  // nullのケースが必要
+  it('should return false for null', () => {
+    expect(instanceOf(null, A)).toBe(false);
+  });
+
+  // アロー関数のケースが必要
+  it('should return false for arrow function', () => {
+    const arrowFn = () => {};
+    expect(instanceOf(arrowFn, Function)).toBe(false);
+  });
 });

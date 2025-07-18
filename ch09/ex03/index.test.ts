@@ -50,4 +50,6 @@ describe('PositiveNumber', () => {
   it('should throw error if initialized with NaN', () => {
     expect(() => PositiveNumber(NaN)).toThrow('require : x > 0');
   });
+
+  // アクセサプロパティ以外のメソッドがないことも確認する
 });

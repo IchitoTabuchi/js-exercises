@@ -1,3 +1,5 @@
+// applyを使う。理由オブジェクトのメソッドが渡されたときに、thisが参照できないというエラーが発生するため。
+
 export function any<T>(
   ...predicates: Array<(arg: T) => boolean>
 ): (arg: T) => boolean {
