@@ -1,5 +1,4 @@
 node_modules
-*.js
 test-results
 *.tsbuildinfo
 exercises
