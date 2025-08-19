@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { BitSet } = require('./sets.cjs');
 const stats = require('./stats.cjs');
-const BitSet = require('./sets.cjs');
 
 let s = new BitSet(100);
 s.insert(10);

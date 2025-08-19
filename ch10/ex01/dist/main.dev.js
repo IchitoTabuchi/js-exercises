@@ -15,7 +15,7 @@
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("{/* eslint-disable @typescript-eslint/no-var-requires */\nconst stats = __webpack_require__(/*! ./stats.cjs */ \"./ch10/ex01/stats.cjs\");\nconst BitSet = __webpack_require__(/*! ./sets.cjs */ \"./ch10/ex01/sets.cjs\");\n\nlet s = new BitSet(100);\ns.insert(10);\ns.insert(20);\ns.insert(30);\nlet average = stats.mean([...s]);\n\nconsole.log(average);\n\n\n//# sourceURL=webpack://preset-ts/./ch10/ex01/index.cjs?\n}");
+eval("{/* eslint-disable @typescript-eslint/no-var-requires */\nconst { BitSet } = __webpack_require__(/*! ./sets.cjs */ \"./ch10/ex01/sets.cjs\");\nconst stats = __webpack_require__(/*! ./stats.cjs */ \"./ch10/ex01/stats.cjs\");\n\nlet s = new BitSet(100);\ns.insert(10);\ns.insert(20);\ns.insert(30);\nlet average = stats.mean([...s]);\n\nconsole.log(average);\n\n\n//# sourceURL=webpack://preset-ts/./ch10/ex01/index.cjs?\n}");
 
 /***/ }),
 
@@ -33,9 +33,9 @@ eval("{/* eslint-disable @typescript-eslint/no-unused-vars */\nclass AbstractSet
 /*!*****************************!*\
   !*** ./ch10/ex01/stats.cjs ***!
   \*****************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
-eval("{/* module decorator */ module = __webpack_require__.nmd(module);\nconst { BitSet } = require('./sets.cjs');\n\nconst modules = {};\nfunction require(moduleName) {\n  return module[moduleName];\n}\n\nmodules['sets.cjs'] = (function () {\n  const exports = {};\n\n  exports.BitSet = BitSet;\n\n  return exports;\n})();\n\nmodules['stats.cjs'] = (function () {\n  const exports = {};\n  const sum = (x, y) => x + y;\n  const square = (x) => x * x;\n  exports.mean = function (data) {\n    return sum(...data) / data.length;\n  };\n  exports.stddev = function (data) {\n    const mean = exports.mean(data);\n    return Math.sqrt(sum(...data.map(square)) / data.length - square(mean));\n  };\n\n  return exports;\n})();\n\n\n//# sourceURL=webpack://preset-ts/./ch10/ex01/stats.cjs?\n}");
+eval("{const sum = (x, y) => x + y;\nconst square = (x) => x * x;\n\nexports.mean = (data) => data.reduce(sum) / data.length;\nexports.stddev = function (d) {\n  const m = exports.mean(d);\n  return Math.sqrt(\n    d\n      .map((x) => x - m)\n      .map(square)\n      .reduce(sum) /\n      (d.length - 1)\n  );\n};\n\n\n//# sourceURL=webpack://preset-ts/./ch10/ex01/stats.cjs?\n}");
 
 /***/ })
 
@@ -53,30 +53,17 @@ eval("{/* module decorator */ module = __webpack_require__.nmd(module);\nconst {
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			id: moduleId,
-/******/ 			loaded: false,
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
 /******/ 	
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/node module decorator */
-/******/ 	(() => {
-/******/ 		__webpack_require__.nmd = (module) => {
-/******/ 			module.paths = [];
-/******/ 			if (!module.children) module.children = [];
-/******/ 			return module;
-/******/ 		};
-/******/ 	})();
 /******/ 	
 /************************************************************************/
 /******/ 	
