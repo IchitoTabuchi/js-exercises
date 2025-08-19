@@ -99,7 +99,7 @@ function call() {
 }
 
 call(1, 2, 3);
-call('A', 'B');
+call("A", "B");
 
 console.log(args[0]); // [1, 2, 3]
 console.log(args[1]); // ["A", "B"]
@@ -175,7 +175,7 @@ function Product(name, price) {
 addMyCall(Product);
 
 const that = {};
-Product.myCall(that, 'Apple', 100);
+Product.myCall(that, "Apple", 100);
 console.log(that); // { name: 'Apple', price: 100 }
 ```
 
@@ -200,8 +200,8 @@ console.log(arr.sort((a, b) => a - b));
 JavaScript で同様の書き方ができるよう、 `Function` コンストラクタを用いて以下のコードが動作するような 関数 `f` を作成しなさい。
 
 ```js
-console.log(arr.reduce(f('$1 + $2'), 0));
-console.log(arr.sort(f('$1 - $2')));
+console.log(arr.reduce(f("$1 + $2"), 0));
+console.log(arr.sort(f("$1 - $2")));
 ```
 
 - `f` は引数に関数の本体を文字列として受け取る
@@ -250,7 +250,7 @@ const safeJsonParse = catching(JSON.parse, (e) => {
 });
 
 console.log(safeJsonParse('{"a": 1}')); // => {a: 1}
-console.log(safeJsonParse('{Invalid Json}')); // => {error: "SyntaxError: ..."}
+console.log(safeJsonParse("{Invalid Json}")); // => {error: "SyntaxError: ..."}
 ```
 
 **出題範囲**: 8.8.2

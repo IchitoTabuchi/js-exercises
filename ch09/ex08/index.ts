@@ -65,3 +65,5 @@ export const elapseSnoozeTime = (state: StateType): EventResult => {
       return [state, Action.NONE];
   }
 };
+
+// フローにないパターンではエラーを出すようにするなども考える

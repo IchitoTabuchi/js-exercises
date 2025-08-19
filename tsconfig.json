@@ -24,12 +24,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": [
-    "**/*.ts",
-    "ch09/ex06/index.js",
-    "ch09/ex04/index.test.js",
-    "ch09/ex04/index.test.js",
-    "ch09/ex04/index.js"
-  ],
+  "include": ["**/*.ts", "**/*.js", "**/*.cjs"],
   "exclude": ["node_modules"]
 }
