@@ -56,8 +56,8 @@ describe('sortJapanese', () => {
 describe('toJapaneseDateString', () => {
   const cases: [Date, string][] = [
     [new Date(2024, 3, 2), '令和6年4月2日'],
-    [new Date(2019, 4, 1), '令和1年5月1日'],
-    [new Date(1989, 0, 8), '平成1年1月8日'],
+    [new Date(2019, 4, 1), '令和元年5月1日'],
+    [new Date(1989, 0, 8), '平成元年1月8日'],
     [new Date(1988, 11, 31), '昭和63年12月31日'],
   ];
 

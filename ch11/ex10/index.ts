@@ -19,15 +19,11 @@ export const getWeekday = (date: string, locale: string): string =>
 
 export const getFirstDayOfLastMonth = (): Date => {
   const now = new Date();
-  const firstThisMonth = new Date(
-    now.getFullYear(),
-    now.getDate() > 0 ? now.getMonth() : now.getMonth() + 1,
-    1
-  );
-  const lastMonth = new Date(firstThisMonth.getTime() - 86_400_000);
-  return new Date(
-    lastMonth.getFullYear(),
-    lastMonth.getDate() > 0 ? lastMonth.getMonth() : lastMonth.getMonth() + 1,
-    1
-  );
+  // const firstThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  // const lastMonth = new Date(firstThisMonth.getTime() - 86_400_000);
+  // return new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
+  now.setDate(0);
+  now.setDate(1);
+  now.setHours(0, 0, 0, 0);
+  return now;
 };

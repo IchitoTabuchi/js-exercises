@@ -6,6 +6,13 @@ export const detectFileType = (input: ArrayBuffer | Uint8Array): string => {
   if (startsWith([0x89, 0x50, 0x4e, 0x47])) return 'PNG';
   if (startsWith([0x47, 0x49, 0x46, 0x38])) return 'GIF';
   if (startsWith([0x42, 0x4d])) return 'BMP';
-  if (startsWith([0x50, 0x4b])) return 'ZIP';
+  // 3byte, 4byte目の一致をみる必要がある。
+  // https://en.wikipedia.org/wiki/List_of_file_signatures
+  if (
+    startsWith([0x50, 0x4b, 0x03, 0x04]) ||
+    startsWith([0x50, 0x4b, 0x05, 0x06]) ||
+    startsWith([0x50, 0x4b, 0x07, 0x08])
+  )
+    return 'ZIP';
   return 'UNKNOWN';
 };
