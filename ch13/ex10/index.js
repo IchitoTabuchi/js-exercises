@@ -1,15 +1,10 @@
 import * as fs from 'node:fs/promises';
 import { join } from 'node:path';
 
-export async function fetchSumOfFileSizes(path: string) {
+export async function fetchSumOfFileSizesPromiseAll(path) {
   const files = await fs.readdir(path);
-
   const sizes = await Promise.all(
-    files.map(async (file) => {
-      const stats = await fs.stat(join(path, file));
-      return stats.size;
-    })
+    files.map(async (file) => (await fs.stat(join(path, file))).size)
   );
-
   return sizes.reduce((total, size) => total + size, 0);
 }

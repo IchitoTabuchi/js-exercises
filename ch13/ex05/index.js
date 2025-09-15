@@ -5,37 +5,38 @@ function wait(msec) {
 
 function g1() {
   // then チェーンに変更。
-  return wait(1000).then(() => {
-    console.log("A");
-    return wait(2000);
-  })
-  .then(() => {
-    console.log("B");
-    return wait(3000);
-  })
-  .then(() => {
-    console.log("C");
-  });
+  return wait(1000)
+    .then(() => {
+      console.log('A');
+      return wait(2000);
+    })
+    .then(() => {
+      console.log('B');
+      return wait(3000);
+    })
+    .then(() => {
+      console.log('C');
+    });
 }
 
 function g2() {
   // チェーン自体がPromiseなのでnew Promiseは不要。
   return wait(1000)
-      .then(() => console.log("A"))
-      .then(() => wait(2000))
-      .then(() => console.log("B"))
-      .then(() => wait(3000))
-      .then(() => console.log("C"))
+    .then(() => console.log('A'))
+    .then(() => wait(2000))
+    .then(() => console.log('B'))
+    .then(() => wait(3000))
+    .then(() => console.log('C'));
 }
 
 function g3() {
   function fetchUser() {
-    return Promise.resolve({ id: 42, name: "John" });
+    return Promise.resolve({ id: 42, name: 'John' });
   }
   function fetchUserFriends(user) {
     return Promise.resolve([
-      { name: "Sam", id: 100 },
-      { name: "Bob", id: 1 },
+      { name: 'Sam', id: 100 },
+      { name: 'Bob', id: 1 },
     ]);
   }
 
@@ -52,6 +53,6 @@ function g4() {
     return 42;
   }
 
-  // 値をPromise.resolveでラップして返す
+  // 値をPromise.resolveでラップするだけでよい。
   return Promise.resolve(someFunction());
 }

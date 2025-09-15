@@ -14,11 +14,11 @@ function wait(msec) {
 
 // 例: 1秒後に "A" と出力し、その2秒後に "B" と出力し、その3秒後に "C" と出力する
 wait(1000)
-  .then(() => console.log("A"))
+  .then(() => console.log('A'))
   .then(() => wait(2000))
-  .then(() => console.log("B"))
+  .then(() => console.log('B'))
   .then(() => wait(3000))
-  .then(() => console.log("C"));
+  .then(() => console.log('C'));
 ```
 
 また記述を簡潔にするために以下の関数を利用する:
@@ -32,16 +32,16 @@ const wait3 = () => wait(3000);
 
 // ログ出力
 const log = (v) => console.log(v);
-const logA = (v) => console.log("A");
-const logB = (v) => console.log("B");
-const logC = (v) => console.log("C");
+const logA = (v) => console.log('A');
+const logB = (v) => console.log('B');
+const logC = (v) => console.log('C');
 
 // 例外
 const errX = () => {
-  throw new Error("X");
+  throw new Error('X');
 };
 const errY = () => {
-  throw new Error("Y");
+  throw new Error('Y');
 };
 ```
 
@@ -51,7 +51,7 @@ const errY = () => {
 また「[タスク](https://developer.mozilla.org/ja/docs/Web/API/HTML_DOM_API/Microtask_guide)」について調査し、この用語を用いて理由を説明しなさい。
 
 ```js
-setTimeout(() => console.log("Hello, world!"), 1000);
+setTimeout(() => console.log('Hello, world!'), 1000);
 
 function longRunningFunction() {
   while (true) {
@@ -232,9 +232,11 @@ function f12() {
 ```
 
 ### 参考: 図解について
+
 解答を Markdown に記載する場合、 [mermaidのガントチャート](https://docs.mermaidchart.com/mermaid-oss/syntax/gantt.html) を利用することで実行タイミングの図を作成し、Github 上で表示することができる。
 
 Markdown の文中で以下のような記載をいれることで、
+
 ````
 ```mermaid
 gantt
@@ -273,7 +275,7 @@ gantt
 以下は Node.js 標準ライブラリのディレクトリ (フォルダ) を作成する関数 `fs.mkdir` を変換する例である:
 
 ```js
-import * as fs from "node:fs";
+import * as fs from 'node:fs';
 
 function mkdir(path, options) {
   return new Promise((resolve, reject) => {
@@ -288,17 +290,17 @@ function mkdir(path, options) {
 }
 
 // ディレクトリ A → B → C を順に作る以下のコード (※ エラーハンドリングは省略) を...
-fs.mkdir("A", () => {
-  fs.mkdir("B", () => {
-    fs.mkdir("C", () => console.log("COMPLETED"));
+fs.mkdir('A', () => {
+  fs.mkdir('B', () => {
+    fs.mkdir('C', () => console.log('COMPLETED'));
   });
 });
 
 // 以下のように書くことができる
-mkdir("A")
-  .then(() => mkdir("B"))
-  .then(() => mkdir("C"))
-  .then(() => console.log("COMPLETED"));
+mkdir('A')
+  .then(() => mkdir('B'))
+  .then(() => mkdir('C'))
+  .then(() => console.log('COMPLETED'));
 ```
 
 また、Node.js では [util.promisify 関数](https://nodejs.org/api/util.html#utilpromisifyoriginal)を利用することで、上記の `Promise` コンストラクタと同様の変換が可能である。
@@ -308,7 +310,6 @@ mkdir("A")
 - [fs.readdir](https://nodejs.org/api/fs.html#fsreaddirpath-options-callback)
 - [fs.stat](https://nodejs.org/api/fs.html#fsstatpath-options-callback)
 
-
 **出題範囲**: 13.2
 
 ## 問題 13.4 💻🧪
@@ -317,13 +318,13 @@ mkdir("A")
 このため先の問題のようにわざわざ自分で Promise 版の関数を作る必要はない。
 
 ```js
-import * as fs from "node:fs";
-import * as fsPromises from "node:fs/promises";
+import * as fs from 'node:fs';
+import * as fsPromises from 'node:fs/promises';
 
 fsPromises
-  .mkdir("A")
-  .then(() => fsPromises.mkdir("B"))
-  .then(() => fsPromises.mkdir("C"));
+  .mkdir('A')
+  .then(() => fsPromises.mkdir('B'))
+  .then(() => fsPromises.mkdir('C'));
 ```
 
 それでは以下の 2 つの関数を `node:fs/promises` を利用し Promise を返す関数に書き換えなさい:
@@ -391,11 +392,11 @@ function fetchSumOfFileSizes(path, callback) {
 function g1() {
   // TODO: then のネストを無くしなさい
   return wait(1000).then(() => {
-    console.log("A");
+    console.log('A');
     return wait(2000).then(() => {
-      console.log("B");
+      console.log('B');
       return wait(3000).then(() => {
-        console.log("C");
+        console.log('C');
       });
     });
   });
@@ -405,11 +406,11 @@ function g2() {
   // TODO: new Promise を使わないように書き換えなさい
   return new Promise((resolve, reject) => {
     wait(1000)
-      .then(() => console.log("A"))
+      .then(() => console.log('A'))
       .then(() => wait(2000))
-      .then(() => console.log("B"))
+      .then(() => console.log('B'))
       .then(() => wait(3000))
-      .then(() => console.log("C"))
+      .then(() => console.log('C'))
       .then(resolve, reject);
   });
 }
@@ -417,12 +418,12 @@ function g2() {
 function g3() {
   // 以下2つの関数が存在するとします (中身は適当)
   function fetchUser() {
-    return Promise.resolve({ id: 42, name: "John" });
+    return Promise.resolve({ id: 42, name: 'John' });
   }
   function fetchUserFriends(user) {
     return Promise.resolve([
-      { name: "Sam", id: 100 },
-      { name: "Bob", id: 1 },
+      { name: 'Sam', id: 100 },
+      { name: 'Bob', id: 1 },
     ]);
   }
 
@@ -546,15 +547,15 @@ async function i2() {
   const v = await Promise.all([
     wait3().then(() => {
       logA();
-      return "A";
+      return 'A';
     }),
     wait2().then(() => {
       logB();
-      return "B";
+      return 'B';
     }),
     wait1().then(() => {
       logC();
-      return "C";
+      return 'C';
     }),
   ]);
   log(v);
@@ -571,7 +572,7 @@ async function i3() {
       }),
       wait2().then(() => {
         logB();
-        return "B";
+        return 'B';
       }),
       wait1().then(() => {
         errY();
@@ -631,7 +632,7 @@ async function i4() {
 
 ```js
 const resp = await retryWithExponentialBackoff(
-  () => fetch("https://example.com"),
+  () => fetch('https://example.com'),
   5
 );
 ```
@@ -644,21 +645,25 @@ const resp = await retryWithExponentialBackoff(
 また「[マイクロタスク](https://developer.mozilla.org/ja/docs/Web/API/HTML_DOM_API/Microtask_guide)」について調査し、この用語を用いて理由を説明しなさい。
 
 ```js
-setTimeout(() => console.log("Hello, world!"), 1000);
+setTimeout(() => console.log('Hello, world!'), 1000);
 
 async function longA() {
   let count = 0;
   while (true) {
-    if ((++count % 1000) === 0) { console.log("A"); }
-    await Promise.resolve({})
+    if (++count % 1000 === 0) {
+      console.log('A');
+    }
+    await Promise.resolve({});
   }
 }
 
 async function longB() {
   let count = 0;
   while (true) {
-    if ((++count % 1000) === 0) { console.log("B"); }
-    await Promise.resolve({})
+    if (++count % 1000 === 0) {
+      console.log('B');
+    }
+    await Promise.resolve({});
   }
 }
 
@@ -678,7 +683,7 @@ longB();
 // 利用例
 (async () => {
   // カレントディレクトリ (.) のファイル・フォルダを再帰的に取得し表示する
-  for await (const elem of walk(".")) {
+  for await (const elem of walk('.')) {
     console.log(elem);
   }
 

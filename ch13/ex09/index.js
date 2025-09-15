@@ -45,15 +45,15 @@ async function i2() {
   const v = await Promise.all([
     wait3().then(() => {
       logA();
-      return "A";
+      return 'A';
     }),
     wait2().then(() => {
       logB();
-      return "B";
+      return 'B';
     }),
     wait1().then(() => {
       logC();
-      return "C";
+      return 'C';
     }),
   ]);
   log(v);
@@ -70,7 +70,7 @@ async function i3() {
       }),
       wait2().then(() => {
         logB();
-        return "B";
+        return 'B';
       }),
       wait1().then(() => {
         errY();
@@ -109,7 +109,40 @@ async function i4() {
   log(v);
 }
 
-i1();
-i2();
-i3();
-i4();
+async function i4Output10() {
+  // NOTE: 複数の非同期処理が1つの変数に対し書き込みを行う場合、読み込みと書き込みの間に await が入るとどうなるだろうか
+  let v = 0;
+
+  const p1 = async () => {
+    console.log('p1 start');
+    await wait1();
+    for (let i = 0; i < 5; i++) {
+      const next = v + 1;
+      console.log(`p1: ${v} -> ${next}`);
+      await wait2();
+      v = next;
+      console.log(`p1: set v = ${v}`);
+    }
+  };
+
+  const p2 = async () => {
+    console.log('p2 start');
+    for (let i = 0; i < 5; i++) {
+      const next = v + 1;
+      console.log(`p2: ${v} -> ${next}`);
+      await wait2();
+      v = next;
+      console.log(`p2: set v = ${v}`);
+    }
+  };
+
+  await p1();
+  await p2();
+  log(v);
+}
+
+// i1();
+// i2();
+// i3();
+// i4();
+i4Output10();

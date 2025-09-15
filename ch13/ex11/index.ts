@@ -9,9 +9,7 @@ export async function retryWithExponentialBackoff<T>(
     try {
       return await func();
     } catch (err) {
-      if (attempt++ >= maxRetry) {
-        throw err;
-      }
+      if (attempt++ >= maxRetry) throw err;
       const delay = 1000 * 2 ** attempt;
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
