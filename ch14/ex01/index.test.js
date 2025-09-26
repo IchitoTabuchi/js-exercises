@@ -2,16 +2,16 @@ import {
   nestedUnwritableObj,
   unwritableAndUnconfigurableObj,
   writableAndUnconfigurableObj,
-} from "./index.js";
+} from './index.ts';
 
-test("Unwritable and unconfigurable object", () => {
+test('Unwritable and unconfigurable object', () => {
   const a = unwritableAndUnconfigurableObj();
   expect(a).toStrictEqual({ a: 1 });
   expect(() => (a.a = 3)).toThrow();
   expect(() => delete a.a).toThrow();
 });
 
-test("Writable and unconfigurable object", () => {
+test('Writable and unconfigurable object', () => {
   const b = writableAndUnconfigurableObj();
   expect(b).toStrictEqual({ b: 2 });
   b.b = 3;
@@ -19,7 +19,7 @@ test("Writable and unconfigurable object", () => {
   expect(() => delete b.b).toThrow();
 });
 
-test("Nested unwritable object", () => {
+test('Nested unwritable object', () => {
   const c = nestedUnwritableObj();
   expect(c).toStrictEqual({ c: { d: { e: 3 } } });
   expect(() => (c.f = 1)).toThrow();
