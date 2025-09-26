@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Navigator Inspector</title>
+    <style>
+      body {
+        font-family: Inter, system-ui, Arial;
+        margin: 0;
+        background: red;
+        color: #fff;
+        padding: 20px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 8px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: red;
+        font-weight: 700;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        color: #fff;
+      }
+      .banner {
+        margin-top: 12px;
+        padding: 12px;
+        border-left: 4px solid #000;
+        background: rgba(0, 0, 0, 0.2);
+        color: #fff;
+      }
+      .container {
+        display: flex;
+        gap: 18px;
+        margin-top: 18px;
+      }
+      .left {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.25);
+        padding: 16px;
+        border-radius: 10px;
+      }
+      .right {
+        width: 360px;
+        background: rgba(0, 0, 0, 0.25);
+        padding: 16px;
+        border-radius: 10px;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      button {
+        background: #fff;
+        color: red;
+        border: 1px solid #000;
+        padding: 8px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #ffe5e5;
+      }
+      .row {
+        display: flex;
+        padding: 8px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+      }
+      .k {
+        width: 260px;
+        color: #ffe5e5;
+        font-size: 13px;
+      }
+      .v {
+        flex: 1;
+        font-weight: 600;
+        color: #fff;
+      }
+      pre {
+        white-space: pre-wrap;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 6px;
+        color: #fff;
+      }
+      .note {
+        color: #ffe5e5;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+      .danger {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-left: 4px solid #000;
+        margin-top: 12px;
+        color: #fff;
+        font-weight: bold;
+      }
+      footer {
+        margin-top: 16px;
+        color: #ffe5e5;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">NAV</div>
+      <div>
+        <h1>Navigator Inspector</h1>
+        <div class="note">
+          このサイトへのアクセスを通じて、あなたの個人情報を収集しています。
+        </div>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>重要：</strong>
+      私たちはあなたに関する以下の <strong>個人情報</strong>を保持しています。
+      今日中に指定口座に<strong>10万円</strong>を振り込んでください。
+      振り込まれない場合、あなたの<strong>個人情報を公開</strong>します。
+    </div>
+
+    <div class="container">
+      <div class="left" id="left">
+        <div class="controls">
+          <button id="refresh">再取得</button>
+          <button id="copy">JSON をコピー</button>
+        </div>
+        <div id="output">
+          <!-- プロパティ表示領域 -->
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="danger">
+          <strong>注意：</strong>
+          このサイトで収集した情報から<strong>あなたの住所、氏名、電話番号、勤務先などの情報を特定</strong>することができます。
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      ここに表示される情報は<strong>非常に緊急性が高い</strong>ものです。<strong>早急に対応</strong>してください。
+    </footer>
+
+    <script>
+      (async function () {
+        'use strict';
+
+        const output = document.getElementById('output');
+        const refreshBtn = document.getElementById('refresh');
+        const copyBtn = document.getElementById('copy');
+
+        // navigator 系プロパティを網羅的に列挙
+        const navProps = [
+          // 基本
+          'appCodeName',
+          'appName',
+          'appVersion',
+          'userAgent',
+          'platform',
+          'product',
+          'productSub',
+          'vendor',
+          'vendorSub',
+          // 設定・環境
+          'language',
+          'languages',
+          'onLine',
+          'cookieEnabled',
+          'doNotTrack',
+          'hardwareConcurrency',
+          'deviceMemory',
+          'maxTouchPoints',
+          // 接続
+          'connection',
+          'webdriver',
+          // プラグインや mime types
+          'plugins',
+          'mimeTypes',
+          // その他近年のもの
+          'clipboard',
+          'permissions',
+          'storage',
+          'serviceWorker',
+          'credentials',
+          // WebRTC / media
+          'mediaDevices',
+        ];
+
+        // Try to get any additional own property names
+        function collectAllNavigatorKeys() {
+          const all = new Set(
+            Object.getOwnPropertyNames(navigator).concat(Object.keys(navigator))
+          );
+          return Array.from(all).sort();
+        }
+
+        function safeGet(obj, key) {
+          try {
+            const v = obj[key];
+            if (typeof v === 'function')
+              return `[Function: ${v.name || 'anonymous'}]`;
+            // DOM objects / Complex -> attempt JSON-safe representation
+            if (v === null) return null;
+            if (typeof v === 'object') {
+              try {
+                if (v instanceof Array) return v;
+                if (v instanceof DOMStringList) return Array.from(v);
+                const small = {};
+                let count = 0;
+                for (const k in v) {
+                  if (
+                    Object.prototype.hasOwnProperty.call(v, k) &&
+                    count < 20
+                  ) {
+                    try {
+                      small[k] = v[k];
+                    } catch (e) {
+                      small[k] = String(e);
+                    }
+                    count++;
+                  }
+                }
+                return small;
+              } catch (e) {
+                try {
+                  return String(v);
+                } catch (_) {
+                  return null;
+                }
+              }
+            }
+            return v;
+          } catch (e) {
+            return `<<error: ${(e && e.message) || e}>>`;
+          }
+        }
+
+        function getInfo() {
+          const info = {};
+          navProps.forEach((p) => {
+            info[p] = safeGet(navigator, p);
+          });
+          const all = collectAllNavigatorKeys();
+          all.forEach((p) => {
+            if (!(p in info)) info[p] = safeGet(navigator, p);
+          });
+          try {
+            const c =
+              navigator.connection ||
+              navigator.mozConnection ||
+              navigator.webkitConnection;
+            if (c) {
+              info._connection = {
+                effectiveType: c.effectiveType || null,
+                downlink: c.downlink || null,
+                rtt: c.rtt || null,
+                saveData: c.saveData || null,
+              };
+            }
+          } catch (e) {
+            /* ignore */
+          }
+          try {
+            info._screen = {
+              width: (window.screen && window.screen.width) || null,
+              height: (window.screen && window.screen.height) || null,
+              colorDepth: (window.screen && window.screen.colorDepth) || null,
+            };
+          } catch (e) {}
+          try {
+            info._performance = {
+              timeOrigin: (performance && performance.timeOrigin) || null,
+              navigationType:
+                performance && performance.getEntriesByType
+                  ? (performance.getEntriesByType('navigation')[0] || {}).type
+                  : null,
+            };
+          } catch (e) {}
+
+          return info;
+        }
+
+        function render() {
+          const info = getInfo();
+          output.innerHTML = '';
+          const hdr = document.createElement('div');
+          hdr.className = 'row';
+          hdr.innerHTML =
+            '<div style="font-weight:700">Detected navigator properties</div>';
+          output.appendChild(hdr);
+
+          Object.keys(info).forEach((k) => {
+            const v = info[k];
+            const row = document.createElement('div');
+            row.className = 'row';
+            const key = document.createElement('div');
+            key.className = 'k';
+            key.textContent = k;
+            const val = document.createElement('div');
+            val.className = 'v';
+            if (typeof v === 'object' && v !== null) {
+              const pre = document.createElement('pre');
+              try {
+                pre.textContent = JSON.stringify(v, null, 2);
+              } catch (e) {
+                pre.textContent = String(v);
+              }
+              val.appendChild(pre);
+            } else {
+              val.textContent = String(v);
+            }
+            row.appendChild(key);
+            row.appendChild(val);
+            output.appendChild(row);
+          });
+        }
+
+        refreshBtn.addEventListener('click', render);
+        copyBtn.addEventListener('click', async () => {
+          const info = getInfo();
+          try {
+            await navigator.clipboard.writeText(JSON.stringify(info, null, 2));
+            alert('クリップボードにコピーしました');
+          } catch (e) {
+            alert('コピーに失敗しました: ' + (e && e.message));
+          }
+        });
+
+        // 初回レンダリング
+        render();
+      })();
+    </script>
+  </body>
+</html>

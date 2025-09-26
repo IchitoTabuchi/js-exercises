@@ -20,7 +20,7 @@
     }
   ],
   // TODO: 適宜フロント用にビルドする必要があるディレクトリを追加していく
-  "include": ["**/*.ts"],
+  "include": ["ch15/**.ts", "ch15/**.js"],
   // TODO: ↑の追加に合わせてテスト用のTSファイルとWeb Worker用のTSファイルを除外していく
   "exclude": ["exercises/**/*", "**/*.spec.ts", "**/*.worker.ts"]
 }

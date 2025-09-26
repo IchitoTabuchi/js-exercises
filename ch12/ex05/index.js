@@ -1,0 +1,25 @@
+import * as fs from 'fs';
+export function* readLines(filePath, fsImpl = fs) {
+    const fd = fsImpl.openSync(filePath, 'r');
+    const buffer = new Uint8Array(1024);
+    let leftover = '';
+    try {
+        for (;;) {
+            const bytesRead = fsImpl.readSync(fd, buffer, 0, buffer.length, null);
+            if (bytesRead === 0)
+                break;
+            leftover += Buffer.from(buffer.subarray(0, bytesRead)).toString('utf8');
+            const lines = leftover.split('\n');
+            leftover = lines.pop() ?? '';
+            for (const line of lines)
+                yield line;
+        }
+        if (leftover.length > 0)
+            yield leftover;
+    }
+    finally {
+        fsImpl.closeSync(fd);
+    }
+}
+// textDecoderを使わないとダメ。（forループで切れたときに文字化けしてしまう。）
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEtBQUssRUFBRSxNQUFNLElBQUksQ0FBQztBQUV6QixNQUFNLFNBQVMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyxRQUFnQixFQUFFLE1BQU0sR0FBRyxFQUFFO0lBQ3RELE1BQU0sRUFBRSxHQUFHLE1BQU0sQ0FBQyxRQUFRLENBQUMsUUFBUSxFQUFFLEdBQUcsQ0FBQyxDQUFDO0lBQzFDLE1BQU0sTUFBTSxHQUFHLElBQUksVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ3BDLElBQUksUUFBUSxHQUFHLEVBQUUsQ0FBQztJQUNsQixJQUFJLENBQUM7UUFDSCxTQUFTLENBQUM7WUFDUixNQUFNLFNBQVMsR0FBRyxNQUFNLENBQUMsUUFBUSxDQUFDLEVBQUUsRUFBRSxNQUFNLEVBQUUsQ0FBQyxFQUFFLE1BQU0sQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLENBQUM7WUFDdEUsSUFBSSxTQUFTLEtBQUssQ0FBQztnQkFBRSxNQUFNO1lBQzNCLFFBQVEsSUFBSSxNQUFNLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxRQUFRLENBQUMsQ0FBQyxFQUFFLFNBQVMsQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDLE1BQU0sQ0FBQyxDQUFDO1lBQ3hFLE1BQU0sS0FBSyxHQUFHLFFBQVEsQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLENBQUM7WUFDbkMsUUFBUSxHQUFHLEtBQUssQ0FBQyxHQUFHLEVBQUUsSUFBSSxFQUFFLENBQUM7WUFDN0IsS0FBSyxNQUFNLElBQUksSUFBSSxLQUFLO2dCQUFFLE1BQU0sSUFBSSxDQUFDO1FBQ3ZDLENBQUM7UUFDRCxJQUFJLFFBQVEsQ0FBQyxNQUFNLEdBQUcsQ0FBQztZQUFFLE1BQU0sUUFBUSxDQUFDO0lBQzFDLENBQUM7WUFBUyxDQUFDO1FBQ1QsTUFBTSxDQUFDLFNBQVMsQ0FBQyxFQUFFLENBQUMsQ0FBQztJQUN2QixDQUFDO0FBQ0gsQ0FBQztBQUVELGdEQUFnRCJ9

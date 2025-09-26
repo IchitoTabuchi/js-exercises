@@ -1,0 +1,9 @@
+"use strict";
+// node --loader ts-node/esm ch02/ex03/index.ts
+// NFC
+const panNFC = '\u30D1\u30F3';
+console.log(panNFC);
+// NFD
+const panNFD = '\u30CF\u309A\u30F3';
+console.log(panNFD);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsK0NBQStDO0FBRS9DLE1BQU07QUFDTixNQUFNLE1BQU0sR0FBRyxjQUFjLENBQUM7QUFDOUIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQztBQUVwQixNQUFNO0FBQ04sTUFBTSxNQUFNLEdBQUcsb0JBQW9CLENBQUM7QUFDcEMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQyJ9

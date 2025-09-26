@@ -18,3 +18,5 @@ export function* readLines(filePath: string, fsImpl = fs): Generator<string> {
     fsImpl.closeSync(fd);
   }
 }
+
+// textDecoderを使わないとダメ。（forループで切れたときに文字化けしてしまう。）

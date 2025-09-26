@@ -1,0 +1,31 @@
+// 無限に自然数を返すジェネレータ
+function* integers(start = 2) {
+    let n = start;
+    while (true)
+        yield n++;
+}
+//P363の条件でフィルタするジェネレータ
+function filter(iterable, predicate) {
+    const iterator = iterable[Symbol.iterator]();
+    return {
+        [Symbol.iterator]() {
+            return this;
+        },
+        next() {
+            for (;;) {
+                const v = iterator.next();
+                if (v.done || predicate(v.value))
+                    return v;
+            }
+        },
+    };
+}
+export function* primes() {
+    let seq = integers(2);
+    while (true) {
+        const p = seq.next().value;
+        yield p;
+        seq = filter(seq, (n) => n % p !== 0);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxrQkFBa0I7QUFDbEIsUUFBUSxDQUFDLENBQUMsUUFBUSxDQUFDLFFBQWdCLENBQUM7SUFDbEMsSUFBSSxDQUFDLEdBQUcsS0FBSyxDQUFDO0lBQ2QsT0FBTyxJQUFJO1FBQUUsTUFBTSxDQUFDLEVBQUUsQ0FBQztBQUN6QixDQUFDO0FBRUQsc0JBQXNCO0FBQ3RCLFNBQVMsTUFBTSxDQUNiLFFBQTJCLEVBQzNCLFNBQWlDO0lBRWpDLE1BQU0sUUFBUSxHQUFHLFFBQVEsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLEVBQUUsQ0FBQztJQUM3QyxPQUFPO1FBQ0wsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDO1lBQ2YsT0FBTyxJQUFJLENBQUM7UUFDZCxDQUFDO1FBQ0QsSUFBSTtZQUNGLFNBQVMsQ0FBQztnQkFDUixNQUFNLENBQUMsR0FBRyxRQUFRLENBQUMsSUFBSSxFQUFFLENBQUM7Z0JBQzFCLElBQUksQ0FBQyxDQUFDLElBQUksSUFBSSxTQUFTLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQztvQkFBRSxPQUFPLENBQUMsQ0FBQztZQUM3QyxDQUFDO1FBQ0gsQ0FBQztLQUNtQixDQUFDO0FBQ3pCLENBQUM7QUFFRCxNQUFNLFNBQVMsQ0FBQyxDQUFDLE1BQU07SUFDckIsSUFBSSxHQUFHLEdBQXNCLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQztJQUN6QyxPQUFPLElBQUksRUFBRSxDQUFDO1FBQ1osTUFBTSxDQUFDLEdBQUcsR0FBRyxDQUFDLElBQUksRUFBRSxDQUFDLEtBQUssQ0FBQztRQUMzQixNQUFNLENBQUMsQ0FBQztRQUNSLEdBQUcsR0FBRyxNQUFNLENBQUMsR0FBRyxFQUFFLENBQUMsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDO0lBQ3hDLENBQUM7QUFDSCxDQUFDIn0=

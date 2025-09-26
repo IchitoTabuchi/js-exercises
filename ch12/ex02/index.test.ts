@@ -20,3 +20,6 @@ describe('fibonacciSequence vs fibonacciIterator', () => {
       expect(compareFib(n)).toBe(true);
     });
 });
+
+// フィボナッチ数列の配列を使用して、fibonacciIterator自体が正しい値を返すかテストするのが正しい。
+// fibonacciSequenceが間違っている可能性もあるため。

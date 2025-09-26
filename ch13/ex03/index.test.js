@@ -32,3 +32,6 @@ describe('Promise vs promisify results', () => {
     });
   }
 });
+
+// エラーケースをケアする
+// 比較ではなく、関数自体のテストを書く。

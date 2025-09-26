@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Integrity Test</title>
+  </head>
+  <body>
+    <h1>Script Integrity Test</h1>
+
+    <!-- 正しいハッシュ値 -->
+    <script
+      src="index.js"
+      integrity="sha256-EAw8e7l8ey1x2b+bRXFnDstIJwgnGrMaoSj5HXR5F0A="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 誤ったハッシュ値（テスト用） -->
+    <!-- <script
+      src="myscript.js"
+      integrity="sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      crossorigin="anonymous"
+    ></script> -->
+  </body>
+</html>

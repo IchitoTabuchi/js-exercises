@@ -1,5 +1,5 @@
-import * as fs from "node:fs/promises";
-import * as path from "node:path";
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
 
 export interface WalkEntry {
   path: string;
@@ -20,3 +20,5 @@ export async function* walk(rootPath: string): AsyncGenerator<WalkEntry> {
     }
   }
 }
+
+// ディレクトリでもファイルでもない場合も処理する。

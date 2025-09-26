@@ -1,0 +1,2 @@
+export const areNumbersEqual = (a, b, epsilon = 1e-10) => Math.abs(a - b) < epsilon;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLENBQUMsTUFBTSxlQUFlLEdBQUcsQ0FDN0IsQ0FBUyxFQUNULENBQVMsRUFDVCxVQUFrQixLQUFLLEVBQ2QsRUFBRSxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsQ0FBQyxHQUFHLENBQUMsQ0FBQyxHQUFHLE9BQU8sQ0FBQyJ9

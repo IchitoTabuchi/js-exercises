@@ -1,26 +1,56 @@
-export class TypedMap extends Map {
-  constructor(keyType, valueType, entries) {
-    if (entries) {
-      for (let [k, v] of entries) {
-        if (typeof k !== keyType || typeof v !== valueType) {
-          throw new TypeError(`Wrong type for entry:[${k}, ${v}]`);
+export class TypedMap {
+    keyType;
+    valueType;
+    map;
+    constructor(keyType, valueType, entries) {
+        this.keyType = keyType;
+        this.valueType = valueType;
+        this.map = new Map();
+        if (entries) {
+            for (const [k, v] of entries) {
+                if (typeof k !== keyType || typeof v !== valueType)
+                    throw new TypeError(`Wrong type for entry: [${k}, ${v}]`);
+                this.map.set(k, v);
+            }
         }
-      }
     }
-    super(entries);
-
-    this.keyType = keyType;
-    this.valueType = valueType;
-  }
-
-  set(key, value) {
-    if (this.keyType && typeof key !== this.keyType) {
-      throw new TypeError(`${key} is not of type ${this.keyType}`);
+    set(key, value) {
+        if (typeof key !== this.keyType)
+            throw new TypeError(`${key} is not of type ${this.keyType}`);
+        if (typeof value !== this.valueType)
+            throw new TypeError(`${value} is not of type ${this.valueType}`);
+        this.map.set(key, value);
+        return this;
     }
-    if (this.valueType && typeof value !== this.valueType) {
-      throw new TypeError(`${value} is not of type ${this.valueType}`);
+    get(key) {
+        return this.map.get(key);
     }
-
-    return super.set(key, value);
-  }
+    has(key) {
+        return this.map.has(key);
+    }
+    delete(key) {
+        return this.map.delete(key);
+    }
+    clear() {
+        this.map.clear();
+    }
+    entries() {
+        return this.map.entries();
+    }
+    keys() {
+        return this.map.keys();
+    }
+    values() {
+        return this.map.values();
+    }
+    forEach(callbackFn, thisArg) {
+        this.map.forEach(callbackFn, thisArg);
+    }
+    get size() {
+        return this.map.size;
+    }
+    [Symbol.iterator]() {
+        return this.map[Symbol.iterator]();
+    }
 }
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLE9BQU8sUUFBUTtJQUNGLE9BQU8sQ0FBUztJQUNoQixTQUFTLENBQVM7SUFDbEIsR0FBRyxDQUFZO0lBRWhDLFlBQ0UsT0FBZSxFQUNmLFNBQWlCLEVBQ2pCLE9BQTZDO1FBRTdDLElBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxTQUFTLEdBQUcsU0FBUyxDQUFDO1FBQzNCLElBQUksQ0FBQyxHQUFHLEdBQUcsSUFBSSxHQUFHLEVBQVEsQ0FBQztRQUUzQixJQUFJLE9BQU8sRUFBRSxDQUFDO1lBQ1osS0FBSyxNQUFNLENBQUMsQ0FBQyxFQUFFLENBQUMsQ0FBQyxJQUFJLE9BQU8sRUFBRSxDQUFDO2dCQUM3QixJQUFJLE9BQU8sQ0FBQyxLQUFLLE9BQU8sSUFBSSxPQUFPLENBQUMsS0FBSyxTQUFTO29CQUNoRCxNQUFNLElBQUksU0FBUyxDQUFDLDBCQUEwQixDQUFDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQztnQkFFNUQsSUFBSSxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDO1lBQ3JCLENBQUM7UUFDSCxDQUFDO0lBQ0gsQ0FBQztJQUVELEdBQUcsQ0FBQyxHQUFNLEVBQUUsS0FBUTtRQUNsQixJQUFJLE9BQU8sR0FBRyxLQUFLLElBQUksQ0FBQyxPQUFPO1lBQzdCLE1BQU0sSUFBSSxTQUFTLENBQUMsR0FBRyxHQUFHLG1CQUFtQixJQUFJLENBQUMsT0FBTyxFQUFFLENBQUMsQ0FBQztRQUUvRCxJQUFJLE9BQU8sS0FBSyxLQUFLLElBQUksQ0FBQyxTQUFTO1lBQ2pDLE1BQU0sSUFBSSxTQUFTLENBQUMsR0FBRyxLQUFLLG1CQUFtQixJQUFJLENBQUMsU0FBUyxFQUFFLENBQUMsQ0FBQztRQUVuRSxJQUFJLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLEVBQUUsS0FBSyxDQUFDLENBQUM7UUFDekIsT0FBTyxJQUFJLENBQUM7SUFDZCxDQUFDO0lBRUQsR0FBRyxDQUFDLEdBQU07UUFDUixPQUFPLElBQUksQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDO0lBQzNCLENBQUM7SUFFRCxHQUFHLENBQUMsR0FBTTtRQUNSLE9BQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsR0FBRyxDQUFDLENBQUM7SUFDM0IsQ0FBQztJQUVELE1BQU0sQ0FBQyxHQUFNO1FBQ1gsT0FBTyxJQUFJLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQztJQUM5QixDQUFDO0lBRUQsS0FBSztRQUNILElBQUksQ0FBQyxHQUFHLENBQUMsS0FBSyxFQUFFLENBQUM7SUFDbkIsQ0FBQztJQUVELE9BQU87UUFDTCxPQUFPLElBQUksQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLENBQUM7SUFDNUIsQ0FBQztJQUVELElBQUk7UUFDRixPQUFPLElBQUksQ0FBQyxHQUFHLENBQUMsSUFBSSxFQUFFLENBQUM7SUFDekIsQ0FBQztJQUVELE1BQU07UUFDSixPQUFPLElBQUksQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLENBQUM7SUFDM0IsQ0FBQztJQUVELE9BQU8sQ0FDTCxVQUFzRCxFQUN0RCxPQUFpQjtRQUVqQixJQUFJLENBQUMsR0FBRyxDQUFDLE9BQU8sQ0FBQyxVQUFVLEVBQUUsT0FBTyxDQUFDLENBQUM7SUFDeEMsQ0FBQztJQUVELElBQUksSUFBSTtRQUNOLE9BQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxJQUFJLENBQUM7SUFDdkIsQ0FBQztJQUVELENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQztRQUNmLE9BQU8sSUFBSSxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLEVBQUUsQ0FBQztJQUNyQyxDQUFDO0NBQ0YifQ==

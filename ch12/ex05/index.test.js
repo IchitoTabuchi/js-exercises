@@ -1,0 +1,61 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { jest } from '@jest/globals';
+import * as fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { readLines } from './index.ts';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+describe('readLines', () => {
+    const testFile = path.join(__dirname, 'test.txt');
+    beforeAll(() => {
+        fs.writeFileSync(testFile, 'line1\nline2\nline3\nlastline', 'utf8');
+    });
+    afterAll(() => {
+        fs.unlinkSync(testFile);
+    });
+    it('reads all lines correctly', () => {
+        const lines = [];
+        for (const line of readLines(testFile))
+            lines.push(line);
+        expect(lines).toEqual(['line1', 'line2', 'line3', 'lastline']);
+    });
+    it('closes the file even if iteration is broken', () => {
+        const mockFs = {
+            ...fs,
+            closeSync: jest.fn(fs.closeSync),
+            openSync: fs.openSync,
+            readSync: fs.readSync,
+        };
+        const iter = readLines(testFile, mockFs);
+        for (const _ of iter)
+            break;
+        expect(mockFs.closeSync).toHaveBeenCalledTimes(1);
+    });
+    it('closes the file even if iteration throws an error', () => {
+        const mockFs = {
+            ...fs,
+            closeSync: jest.fn(fs.closeSync),
+            openSync: fs.openSync,
+            readSync: fs.readSync,
+        };
+        const iter = readLines(testFile, mockFs);
+        expect(() => {
+            for (const _ of iter)
+                throw new Error('test error');
+        }).toThrow('test error');
+        expect(mockFs.closeSync).toHaveBeenCalledTimes(1);
+    });
+    it('handles files with only one line', () => {
+        const singleFile = path.join(__dirname, 'single.txt');
+        fs.writeFileSync(singleFile, 'onlyline', 'utf8');
+        const lines = [];
+        for (const line of readLines(singleFile))
+            lines.push(line);
+        expect(lines).toEqual(['onlyline']);
+        fs.unlinkSync(singleFile);
+    });
+});
+// バッファサイズ1024Bを超えるファイルの読み込みもテストする
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXgudGVzdC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImluZGV4LnRlc3QudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsc0RBQXNEO0FBQ3RELHVEQUF1RDtBQUN2RCxPQUFPLEVBQUUsSUFBSSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3JDLE9BQU8sS0FBSyxFQUFFLE1BQU0sSUFBSSxDQUFDO0FBQ3pCLE9BQU8sSUFBSSxNQUFNLE1BQU0sQ0FBQztBQUN4QixPQUFPLEVBQUUsYUFBYSxFQUFFLE1BQU0sS0FBSyxDQUFDO0FBQ3BDLE9BQU8sRUFBRSxTQUFTLEVBQUUsTUFBTSxZQUFZLENBQUM7QUFFdkMsTUFBTSxVQUFVLEdBQUcsYUFBYSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUM7QUFDbEQsTUFBTSxTQUFTLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsQ0FBQztBQUUzQyxRQUFRLENBQUMsV0FBVyxFQUFFLEdBQUcsRUFBRTtJQUN6QixNQUFNLFFBQVEsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxVQUFVLENBQUMsQ0FBQztJQUVsRCxTQUFTLENBQUMsR0FBRyxFQUFFO1FBQ2IsRUFBRSxDQUFDLGFBQWEsQ0FBQyxRQUFRLEVBQUUsK0JBQStCLEVBQUUsTUFBTSxDQUFDLENBQUM7SUFDdEUsQ0FBQyxDQUFDLENBQUM7SUFFSCxRQUFRLENBQUMsR0FBRyxFQUFFO1FBQ1osRUFBRSxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQztJQUMxQixDQUFDLENBQUMsQ0FBQztJQUVILEVBQUUsQ0FBQywyQkFBMkIsRUFBRSxHQUFHLEVBQUU7UUFDbkMsTUFBTSxLQUFLLEdBQWEsRUFBRSxDQUFDO1FBQzNCLEtBQUssTUFBTSxJQUFJLElBQUksU0FBUyxDQUFDLFFBQVEsQ0FBQztZQUFFLEtBQUssQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDekQsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLE9BQU8sQ0FBQyxDQUFDLE9BQU8sRUFBRSxPQUFPLEVBQUUsT0FBTyxFQUFFLFVBQVUsQ0FBQyxDQUFDLENBQUM7SUFDakUsQ0FBQyxDQUFDLENBQUM7SUFFSCxFQUFFLENBQUMsNkNBQTZDLEVBQUUsR0FBRyxFQUFFO1FBQ3JELE1BQU0sTUFBTSxHQUFHO1lBQ2IsR0FBRyxFQUFFO1lBQ0wsU0FBUyxFQUFFLElBQUksQ0FBQyxFQUFFLENBQUMsRUFBRSxDQUFDLFNBQVMsQ0FBQztZQUNoQyxRQUFRLEVBQUUsRUFBRSxDQUFDLFFBQVE7WUFDckIsUUFBUSxFQUFFLEVBQUUsQ0FBQyxRQUFRO1NBQ3RCLENBQUM7UUFDRixNQUFNLElBQUksR0FBRyxTQUFTLENBQUMsUUFBUSxFQUFFLE1BQU0sQ0FBQyxDQUFDO1FBQ3pDLEtBQUssTUFBTSxDQUFDLElBQUksSUFBSTtZQUFFLE1BQU07UUFDNUIsTUFBTSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsQ0FBQyxxQkFBcUIsQ0FBQyxDQUFDLENBQUMsQ0FBQztJQUNwRCxDQUFDLENBQUMsQ0FBQztJQUVILEVBQUUsQ0FBQyxtREFBbUQsRUFBRSxHQUFHLEVBQUU7UUFDM0QsTUFBTSxNQUFNLEdBQUc7WUFDYixHQUFHLEVBQUU7WUFDTCxTQUFTLEVBQUUsSUFBSSxDQUFDLEVBQUUsQ0FBQyxFQUFFLENBQUMsU0FBUyxDQUFDO1lBQ2hDLFFBQVEsRUFBRSxFQUFFLENBQUMsUUFBUTtZQUNyQixRQUFRLEVBQUUsRUFBRSxDQUFDLFFBQVE7U0FDdEIsQ0FBQztRQUVGLE1BQU0sSUFBSSxHQUFHLFNBQVMsQ0FBQyxRQUFRLEVBQUUsTUFBTSxDQUFDLENBQUM7UUFFekMsTUFBTSxDQUFDLEdBQUcsRUFBRTtZQUNWLEtBQUssTUFBTSxDQUFDLElBQUksSUFBSTtnQkFBRSxNQUFNLElBQUksS0FBSyxDQUFDLFlBQVksQ0FBQyxDQUFDO1FBQ3RELENBQUMsQ0FBQyxDQUFDLE9BQU8sQ0FBQyxZQUFZLENBQUMsQ0FBQztRQUV6QixNQUFNLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxDQUFDLHFCQUFxQixDQUFDLENBQUMsQ0FBQyxDQUFDO0lBQ3BELENBQUMsQ0FBQyxDQUFDO0lBRUgsRUFBRSxDQUFDLGtDQUFrQyxFQUFFLEdBQUcsRUFBRTtRQUMxQyxNQUFNLFVBQVUsR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxZQUFZLENBQUMsQ0FBQztRQUN0RCxFQUFFLENBQUMsYUFBYSxDQUFDLFVBQVUsRUFBRSxVQUFVLEVBQUUsTUFBTSxDQUFDLENBQUM7UUFFakQsTUFBTSxLQUFLLEdBQWEsRUFBRSxDQUFDO1FBQzNCLEtBQUssTUFBTSxJQUFJLElBQUksU0FBUyxDQUFDLFVBQVUsQ0FBQztZQUFFLEtBQUssQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7UUFFM0QsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLE9BQU8sQ0FBQyxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUM7UUFDcEMsRUFBRSxDQUFDLFVBQVUsQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUM1QixDQUFDLENBQUMsQ0FBQztBQUNMLENBQUMsQ0FBQyxDQUFDO0FBRUgsa0NBQWtDIn0=

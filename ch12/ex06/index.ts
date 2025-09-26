@@ -20,3 +20,5 @@ export function* walk(rootPath: string): Generator<WalkEntry> {
     }
   }
 }
+
+// ファイルがディレクトリでもファイルでもない場合の分岐も書く必要あり

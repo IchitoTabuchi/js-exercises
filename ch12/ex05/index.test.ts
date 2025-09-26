@@ -66,3 +66,5 @@ describe('readLines', () => {
     fs.unlinkSync(singleFile);
   });
 });
+
+// バッファサイズ1024Bを超えるファイルの読み込みもテストする

@@ -1,0 +1,26 @@
+export class FileSizeExceededError extends Error {
+    filePath;
+    fileSize;
+    maxSize;
+    constructor(filePath, fileSize, maxSize) {
+        super(`File "${filePath}" size ${fileSize} bytes exceeds maximum allowed ${maxSize} bytes.`);
+        this.name = 'FileSizeExceededError';
+        this.filePath = filePath;
+        this.fileSize = fileSize;
+        this.maxSize = maxSize;
+        Object.setPrototypeOf(this, FileSizeExceededError.prototype);
+    }
+}
+const isValidFileSize = (filePath, fileSize, maxSize) => {
+    if (fileSize > maxSize)
+        throw new FileSizeExceededError(filePath, fileSize, maxSize);
+    return true;
+};
+try {
+    isValidFileSize('example.txt', 1024 * 1024, 500000);
+}
+catch (e) {
+    if (e instanceof FileSizeExceededError)
+        console.log(e.message);
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLE9BQU8scUJBQXNCLFNBQVEsS0FBSztJQUNyQyxRQUFRLENBQVM7SUFDakIsUUFBUSxDQUFTO0lBQ2pCLE9BQU8sQ0FBUztJQUV6QixZQUFZLFFBQWdCLEVBQUUsUUFBZ0IsRUFBRSxPQUFlO1FBQzdELEtBQUssQ0FDSCxTQUFTLFFBQVEsVUFBVSxRQUFRLGtDQUFrQyxPQUFPLFNBQVMsQ0FDdEYsQ0FBQztRQUNGLElBQUksQ0FBQyxJQUFJLEdBQUcsdUJBQXVCLENBQUM7UUFDcEMsSUFBSSxDQUFDLFFBQVEsR0FBRyxRQUFRLENBQUM7UUFDekIsSUFBSSxDQUFDLFFBQVEsR0FBRyxRQUFRLENBQUM7UUFDekIsSUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUM7UUFDdkIsTUFBTSxDQUFDLGNBQWMsQ0FBQyxJQUFJLEVBQUUscUJBQXFCLENBQUMsU0FBUyxDQUFDLENBQUM7SUFDL0QsQ0FBQztDQUNGO0FBRUQsTUFBTSxlQUFlLEdBQUcsQ0FDdEIsUUFBZ0IsRUFDaEIsUUFBZ0IsRUFDaEIsT0FBZSxFQUNOLEVBQUU7SUFDWCxJQUFJLFFBQVEsR0FBRyxPQUFPO1FBQ3BCLE1BQU0sSUFBSSxxQkFBcUIsQ0FBQyxRQUFRLEVBQUUsUUFBUSxFQUFFLE9BQU8sQ0FBQyxDQUFDO0lBQy9ELE9BQU8sSUFBSSxDQUFDO0FBQ2QsQ0FBQyxDQUFDO0FBRUYsSUFBSSxDQUFDO0lBQ0gsZUFBZSxDQUFDLGFBQWEsRUFBRSxJQUFJLEdBQUcsSUFBSSxFQUFFLE1BQU0sQ0FBQyxDQUFDO0FBQ3RELENBQUM7QUFBQyxPQUFPLENBQUMsRUFBRSxDQUFDO0lBQ1gsSUFBSSxDQUFDLFlBQVkscUJBQXFCO1FBQUUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsT0FBTyxDQUFDLENBQUM7QUFDakUsQ0FBQyJ9

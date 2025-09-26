@@ -1,21 +1,29 @@
-// node ch03/ex13/index.js
-
-const date1 = new Date('2024-01-12T00:00:00Z');
-
-console.log(date1, date1.toString(), date1 == date1.toString());
-console.log(date1, date1.getTime(), date1 == date1.getTime());
-
-console.log(date1, date1.toString(), date1 >= date1.toString());
-console.log(date1, date1.getTime(), date1 >= date1.getTime());
-
-console.log(
-  date1,
-  new Date(date1.getTime()).toString(),
-  date1 == new Date(date1.getTime()).toString()
-);
-
-console.log(
-  date1.getTime(),
-  date1.toString(),
-  date1.getTime() == date1.getTime()
-);
+export const isPrimitive = (value) => value === null || (typeof value !== 'object' && typeof value !== 'function');
+export const eq = (x, y) => {
+    if (typeof x === typeof y)
+        return x === y;
+    if ((x === null && y === undefined) || (x === undefined && y === null))
+        return true;
+    const types = ['string', 'number', 'boolean'];
+    if (types.includes(typeof x) &&
+        types.includes(typeof y) &&
+        Number(x) === Number(y))
+        return true;
+    if (x instanceof Date)
+        return x.toString() === y;
+    if (y instanceof Date)
+        return y.toString() === x;
+    if (!isPrimitive(x) && Number(x) === y)
+        return true;
+    if (!isPrimitive(y) && Number(y) === x)
+        return true;
+    return false;
+};
+export const lte = (x, y) => {
+    if (eq(x, y))
+        return true;
+    if (Number(x) < Number(y) || Number(x) === Number(y))
+        return true;
+    return x < y;
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLENBQUMsTUFBTSxXQUFXLEdBQUcsQ0FBQyxLQUFVLEVBQVcsRUFBRSxDQUNqRCxLQUFLLEtBQUssSUFBSSxJQUFJLENBQUMsT0FBTyxLQUFLLEtBQUssUUFBUSxJQUFJLE9BQU8sS0FBSyxLQUFLLFVBQVUsQ0FBQyxDQUFDO0FBRS9FLE1BQU0sQ0FBQyxNQUFNLEVBQUUsR0FBRyxDQUFDLENBQU0sRUFBRSxDQUFNLEVBQVcsRUFBRTtJQUM1QyxJQUFJLE9BQU8sQ0FBQyxLQUFLLE9BQU8sQ0FBQztRQUFFLE9BQU8sQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUMxQyxJQUFJLENBQUMsQ0FBQyxLQUFLLElBQUksSUFBSSxDQUFDLEtBQUssU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDLEtBQUssU0FBUyxJQUFJLENBQUMsS0FBSyxJQUFJLENBQUM7UUFDcEUsT0FBTyxJQUFJLENBQUM7SUFDZCxNQUFNLEtBQUssR0FBYSxDQUFDLFFBQVEsRUFBRSxRQUFRLEVBQUUsU0FBUyxDQUFDLENBQUM7SUFDeEQsSUFDRSxLQUFLLENBQUMsUUFBUSxDQUFDLE9BQU8sQ0FBQyxDQUFDO1FBQ3hCLEtBQUssQ0FBQyxRQUFRLENBQUMsT0FBTyxDQUFDLENBQUM7UUFDeEIsTUFBTSxDQUFDLENBQUMsQ0FBQyxLQUFLLE1BQU0sQ0FBQyxDQUFDLENBQUM7UUFFdkIsT0FBTyxJQUFJLENBQUM7SUFDZCxJQUFJLENBQUMsWUFBWSxJQUFJO1FBQUUsT0FBTyxDQUFDLENBQUMsUUFBUSxFQUFFLEtBQUssQ0FBQyxDQUFDO0lBQ2pELElBQUksQ0FBQyxZQUFZLElBQUk7UUFBRSxPQUFPLENBQUMsQ0FBQyxRQUFRLEVBQUUsS0FBSyxDQUFDLENBQUM7SUFDakQsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUMsSUFBSSxNQUFNLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQztRQUFFLE9BQU8sSUFBSSxDQUFDO0lBQ3BELElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQyxDQUFDLElBQUksTUFBTSxDQUFDLENBQUMsQ0FBQyxLQUFLLENBQUM7UUFBRSxPQUFPLElBQUksQ0FBQztJQUNwRCxPQUFPLEtBQUssQ0FBQztBQUNmLENBQUMsQ0FBQztBQUVGLE1BQU0sQ0FBQyxNQUFNLEdBQUcsR0FBRyxDQUFDLENBQU0sRUFBRSxDQUFNLEVBQVcsRUFBRTtJQUM3QyxJQUFJLEVBQUUsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDO1FBQUUsT0FBTyxJQUFJLENBQUM7SUFDMUIsSUFBSSxNQUFNLENBQUMsQ0FBQyxDQUFDLEdBQUcsTUFBTSxDQUFDLENBQUMsQ0FBQyxJQUFJLE1BQU0sQ0FBQyxDQUFDLENBQUMsS0FBSyxNQUFNLENBQUMsQ0FBQyxDQUFDO1FBQUUsT0FBTyxJQUFJLENBQUM7SUFDbEUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDO0FBQ2YsQ0FBQyxDQUFDIn0=

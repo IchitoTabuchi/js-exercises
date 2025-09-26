@@ -1,0 +1,18 @@
+"use strict";
+// node --loader ts-node/esm ch05/ex01/index.ts
+const useSameVariableName = () => {
+    {
+        const x = 1;
+        console.log('Block 1:', x);
+    }
+    {
+        const x = 2;
+        console.log('Block 2:', x);
+    }
+    {
+        const x = 'hello';
+        console.log('Block 3:', x);
+    }
+};
+useSameVariableName();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsK0NBQStDO0FBRS9DLE1BQU0sbUJBQW1CLEdBQUcsR0FBUyxFQUFFO0lBQ3JDLENBQUM7UUFDQyxNQUFNLENBQUMsR0FBVyxDQUFDLENBQUM7UUFDcEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxVQUFVLEVBQUUsQ0FBQyxDQUFDLENBQUM7SUFDN0IsQ0FBQztJQUVELENBQUM7UUFDQyxNQUFNLENBQUMsR0FBVyxDQUFDLENBQUM7UUFDcEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxVQUFVLEVBQUUsQ0FBQyxDQUFDLENBQUM7SUFDN0IsQ0FBQztJQUVELENBQUM7UUFDQyxNQUFNLENBQUMsR0FBVyxPQUFPLENBQUM7UUFDMUIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxVQUFVLEVBQUUsQ0FBQyxDQUFDLENBQUM7SUFDN0IsQ0FBQztBQUNILENBQUMsQ0FBQztBQUVGLG1CQUFtQixFQUFFLENBQUMifQ==
