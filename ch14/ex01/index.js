@@ -1,3 +1,5 @@
+// freezeやsealなどを使用した方が簡潔に書ける。
+
 export const unwritableAndUnconfigurableObj = () =>
   Object.defineProperty({}, 'a', {
     value: 1,
