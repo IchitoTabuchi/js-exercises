@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>inline-circle 属性一覧</title>
+    <script type="module" src="./index.js"></script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+        padding: 2rem;
+        max-width: 840px;
+        margin: 0 auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+      }
+      th,
+      td {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 0.75rem;
+        text-align: left;
+        vertical-align: middle;
+      }
+      thead th {
+        background: rgba(0, 0, 0, 0.05);
+      }
+      code {
+        font-family: 'Fira Code', 'Source Code Pro', monospace;
+        font-size: 0.95em;
+      }
+      inline-circle {
+        margin-inline: 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>&lt;inline-circle&gt; 属性一覧</h1>
+    <table>
+      <thead>
+        <tr>
+          <th><code>color</code></th>
+          <th><code>diameter</code></th>
+          <th><code>border-color</code></th>
+          <th><code>border-width</code></th>
+          <th><code>border-style</code></th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>#4dabf7</code></td>
+          <td><code>1em</code></td>
+          <td><code>#1c7ed6</code></td>
+          <td><code>2px</code></td>
+          <td><code>solid</code></td>
+          <td>
+            <inline-circle
+              color="#4dabf7"
+              diameter="1em"
+              border-color="#1c7ed6"
+              border-width="2px"
+              border-style="solid"
+            ></inline-circle>
+          </td>
+        </tr>
+        <tr>
+          <td><code>#ffa8a8</code></td>
+          <td><code>0.9em</code></td>
+          <td><code>#fa5252</code></td>
+          <td><code>3px</code></td>
+          <td><code>dashed</code></td>
+          <td>
+            <inline-circle
+              color="#ffa8a8"
+              diameter="0.9em"
+              border-color="#fa5252"
+              border-width="3px"
+              border-style="dashed"
+            ></inline-circle>
+          </td>
+        </tr>
+        <tr>
+          <td><code>#63e6be</code></td>
+          <td><code>1.4em</code></td>
+          <td><code>#12b886</code></td>
+          <td><code>4px</code></td>
+          <td><code>dotted</code></td>
+          <td>
+            <inline-circle
+              color="#63e6be"
+              diameter="1.4em"
+              border-color="#12b886"
+              border-width="4px"
+              border-style="dotted"
+            ></inline-circle>
+          </td>
+        </tr>
+        <tr>
+          <td><code>#ffd43b</code></td>
+          <td><code>1.1em</code></td>
+          <td><code>#f08c00</code></td>
+          <td><code>1px</code></td>
+          <td><code>double</code></td>
+          <td>
+            <inline-circle
+              color="#ffd43b"
+              diameter="1.1em"
+              border-color="#f08c00"
+              border-width="1px"
+              border-style="double"
+            ></inline-circle>
+          </td>
+        </tr>
+        <tr>
+          <td><code>#000000</code></td>
+          <td><code>0.8em</code></td>
+          <td><code>#4c4c4c</code></td>
+          <td><code>6px</code></td>
+          <td><code>groove</code></td>
+          <td>
+            <inline-circle
+              color="#000000"
+              diameter="0.8em"
+              border-color="#4c4c4c"
+              border-width="6px"
+              border-style="groove"
+            ></inline-circle>
+          </td>
+        </tr>
+        <tr>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>
+            <inline-circle></inline-circle>
+            <span style="margin-left: 0.5em; color: gray"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+<!doctype html>

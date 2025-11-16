@@ -1,3 +1,338 @@
-.completed {
+/* カスタムプロパティでネオン系カラー値を登録 */
+:root {
+  --ink-pink: #ff2ec4;
+  --ink-green: #7bff3c;
+  --ink-purple: #7a2bff;
+  --ink-blue: #25b6ff;
+  --ink-dark: #0b0d1a;
+  --ink-light: #f5f7ff;
+  --ink-card: rgba(14, 17, 34, 0.75);
+  --ink-shadow: rgba(11, 13, 26, 0.55);
+}
+
+/* フォント・パディングと4層グラデーション背景を設定 */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Futura', 'Noto Sans JP', sans-serif;
+  background:
+    radial-gradient(
+      circle at 18% 12%,
+      rgba(255, 46, 196, 0.32),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(37, 182, 255, 0.28),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 75%,
+      rgba(123, 255, 60, 0.22),
+      transparent 58%
+    ),
+    linear-gradient(120deg, #050710 0%, #0b0d1a 55%, #161c3c 100%);
+  color: var(--ink-light);
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+/* main・form・ulの横幅を最大600pxに制限 */
+main,
+form,
+ul {
+  width: min(600px, 100%);
+}
+
+/* フォームをflex配置しグラデーション背景と枠線・影を適用 */
+#new-todo-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.35rem;
+  border-radius: 20px 20px 12px 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 17, 34, 0.85),
+    rgba(22, 30, 58, 0.95)
+  );
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 26px 40px -24px var(--ink-shadow),
+    0 0 0 2px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+/* フォーム左側にピンクのラジアルグラデーションを重ねる */
+#new-todo-form::before {
+  content: '';
+  position: absolute;
+  inset: -35% 55% 58% -25%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 46, 196, 0.55) 0%,
+    transparent 65%
+  );
+  transform: rotate(-12deg);
+  filter: blur(0.5px);
+  pointer-events: none;
+}
+
+/* フォーム右下にグリーンのラジアルグラデーションを重ねる */
+#new-todo-form::after {
+  content: '';
+  position: absolute;
+  inset: 45% -20% -40% 50%;
+  background: radial-gradient(
+    circle,
+    rgba(123, 255, 60, 0.45) 0%,
+    transparent 70%
+  );
+  transform: rotate(18deg);
+  pointer-events: none;
+}
+
+/* テキスト入力にパディング・青系グラデーション背景・枠線を設定 */
+#new-todo-form input[type='text'] {
+  flex: 1;
+  padding: 0.85rem 1.05rem;
+  border: 1.5px solid rgba(37, 182, 255, 0.4);
+  border-radius: 12px;
+  background: linear-gradient(
+    140deg,
+    rgba(12, 17, 34, 0.9),
+    rgba(32, 44, 82, 0.95)
+  );
+  color: var(--ink-light);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 2px 6px rgba(11, 13, 26, 0.65);
+  position: relative;
+  z-index: 1;
+}
+
+/* フォーカス時に枠線とシャドウをピンクで強調 */
+#new-todo-form input[type='text']:focus {
+  outline: none;
+  border-color: rgba(255, 46, 196, 0.65);
+  box-shadow:
+    0 0 0 3px rgba(255, 46, 196, 0.25),
+    inset 0 0 12px rgba(255, 46, 196, 0.2);
+}
+
+/* 追加ボタンにグラデ背景・太字・影・トランスフォームを指定 */
+#new-todo-form button {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  padding: 0.8rem 1.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #050710;
+  background: linear-gradient(120deg, var(--ink-green), var(--ink-pink));
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 18px 32px -16px rgba(255, 46, 196, 0.6);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+/* ホバー時にボタンを持ち上げ影と明度を変更 */
+#new-todo-form button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 16px 36px -18px rgba(123, 255, 60, 0.55);
+  filter: brightness(1.05);
+}
+
+/* 押下時にボタンを沈め影を弱める */
+#new-todo-form button:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 8px 16px -10px rgba(11, 13, 26, 0.6);
+}
+
+/* リスト全体にグラデ背景・枠線・角丸・影を設定 */
+#todo-list {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 17, 34, 0.82),
+    rgba(22, 28, 54, 0.92)
+  );
+  border: 1.8px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  box-shadow: 0 30px 46px -26px var(--ink-shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+/* リスト上部に紫のラジアルグラデーションを加える */
+#todo-list::before {
+  content: '';
+  position: absolute;
+  inset: -40% -15% 70% 50%;
+  background: radial-gradient(
+    circle,
+    rgba(122, 43, 255, 0.35) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* 各項目をflexで横並びにし余白とグラデ背景を付与 */
+#todo-list li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  padding: 1.05rem 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    110deg,
+    rgba(16, 20, 40, 0.95),
+    rgba(12, 16, 32, 0.85)
+  );
+  overflow: hidden;
+}
+
+/* 最後の項目のみ下線を除去 */
+#todo-list li:last-child {
+  border-bottom: none;
+}
+
+/* 項目左側にピンクの円形グラデーションを配置 */
+#todo-list li::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 35%;
+  width: 36px;
+  height: 36px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--ink-pink),
+    transparent 70%
+  );
+  filter: blur(0.3px);
+  transform: rotate(-18deg);
+  opacity: 0.8;
+}
+
+/* 項目右下にブルーの円形グラデーションを配置 */
+#todo-list li::after {
+  content: '';
+  position: absolute;
+  right: -24px;
+  bottom: -12px;
+  width: 46px;
+  height: 46px;
+  background: radial-gradient(
+    circle at 60% 40%,
+    var(--ink-blue),
+    transparent 68%
+  );
+  transform: rotate(22deg);
+  opacity: 0.55;
+}
+
+/* ビュー領域をflexで整列しz-indexを確保 */
+#todo-list .view {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* チェックボックスのサイズ・accent-color・ドロップシャドウを指定 */
+#todo-list .toggle {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--ink-green);
+  cursor: pointer;
+  filter: drop-shadow(0 0 6px rgba(123, 255, 60, 0.4));
+}
+
+/* テキストに大文字・太字・色・テキストシャドウを適用 */
+#todo-list .content {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  text-shadow: 0 0 10px rgba(37, 182, 255, 0.35);
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* 未完了テキストを1px上方向に移動 */
+#todo-list li:not(.completed) .content {
+  transform: translateY(-1px);
+}
+
+/* 完了テキストに薄い紫色・取り消し線・シャドウを付与 */
+.completed .content {
+  color: rgba(197, 188, 255, 0.55);
   text-decoration: line-through;
+  text-shadow: 0 0 12px rgba(122, 43, 255, 0.35);
+  transform: none;
+}
+
+/* 行ホバー時に背景グラデと内側シャドウを変更 */
+#todo-list li:hover {
+  background: linear-gradient(
+    120deg,
+    rgba(18, 22, 44, 0.95),
+    rgba(14, 18, 34, 0.95)
+  );
+  box-shadow: inset 0 0 18px rgba(255, 46, 196, 0.18);
+}
+
+/* 削除ボタンの背景色・余白・角丸・遷移を設定 */
+#todo-list .destroy {
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: rgba(255, 46, 196, 0.16);
+  color: var(--ink-pink);
+  font-size: 0.95rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+/* 削除ボタンホバー時に背景色とtransformを変更 */
+#todo-list .destroy:hover {
+  background: rgba(255, 46, 196, 0.35);
+  color: #050710;
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* 画面幅560px以下向けのレイアウト変更 */
+@media (max-width: 560px) {
+  /* フォームを縦方向に並べgapを調整 */
+  #new-todo-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+
+  /* ボタンを幅100%に拡張 */
+  #new-todo-form button {
+    width: 100%;
+  }
 }
