@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Demo</title>
+    <!-- AI生成スタイルシート -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .section {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .section h2 {
+        margin-top: 0;
+        color: #555;
+      }
+
+      .request-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 3px;
+      }
+
+      .request-item label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .request-item input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+      }
+
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 3px;
+        min-height: 20px;
+      }
+
+      .result.success {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+      }
+
+      .result.error {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+
+      .result.pending {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+
+      .status {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+        background-color: #e7f3ff;
+        border: 1px solid #b3d9ff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>WebSocket Demo</h1>
+
+    <div class="section">
+      <h2>リクエスト送信</h2>
+      <p>複数のリクエストの同時に送信可</p>
+
+      <div class="request-item">
+        <label for="request1">リクエスト 1:</label>
+        <input type="text" id="request1" />
+        <div id="result1" class="result"></div>
+      </div>
+
+      <div class="request-item">
+        <label for="request2">リクエスト 2:</label>
+        <input type="text" id="request2" />
+        <div id="result2" class="result"></div>
+      </div>
+
+      <div class="request-item">
+        <label for="request3">リクエスト 3:</label>
+        <input type="text" id="request3" />
+        <div id="result3" class="result"></div>
+      </div>
+
+      <div class="request-item">
+        <label for="request4">リクエスト 4:</label>
+        <input type="text" id="request4" />
+        <div id="result4" class="result"></div>
+      </div>
+
+      <button id="sendButton">送信</button>
+      <button id="clearButton">クリア</button>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
