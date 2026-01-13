@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
   <head>
     <title>Simple ToDo</title>
@@ -10,60 +10,38 @@
     <link rel="stylesheet" href="/ch15.04-10/ex02/style.css" />
   </head>
   <!-- IMPORTANT: ChatGPT にはここから下の内容しか変更させないこと -->
-  <body
-    class="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 text-slate-800 font-sans flex items-start justify-center py-10"
-  >
-    <main class="w-full max-w-xl mx-auto px-6">
-      <h1
-        class="text-3xl font-bold mb-6 text-center tracking-tight text-indigo-700"
-      >
-        ToDo List
-      </h1>
-      <form id="new-todo-form" class="flex gap-2 w-full mb-6">
-        <input
-          type="text"
-          id="new-todo"
-          placeholder="What needs to be done?"
-          class="flex-1 rounded border border-slate-300 px-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm bg-white placeholder-slate-400"
-        />
-        <button
-          class="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-medium shadow focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm transition"
-        >
-          Add
-        </button>
-      </form>
+  <body>
+    <form id="new-todo-form">
+      <input type="text" id="new-todo" placeholder="What needs to be done?" />
+      <button>Add</button>
+    </form>
+    <ul id="todo-list">
+      <!-- NOTE: 以下のような要素を JavaScript で動的に追加する
+      <li class="completed">
+        <div class="view">
+          <input class="toggle" type="checkbox" checked />
+          <label class="content">研修の予習範囲を読む</label>
+          <button class="destroy"></button>
+        </div>
+      </li>
+      <li>
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label class="content">研修の練習問題を完了する</label>
+          <button class="destroy"></button>
+        </div>
+      </li>
+      -->
+    </ul>
 
-      <ul id="todo-list" class="space-y-3 w-full">
-        <!-- NOTE: 以下のような要素を JavaScript で動的に追加する
-        <li class="completed">
-          <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label class="content">研修の予習範囲を読む</label>
-            <button class="destroy"></button>
-          </div>
-        </li>
-        -->
-      </ul>
-
-      <template id="todo-template">
-        <li
-          class="group bg-white rounded-lg shadow-sm border border-slate-200 p-3 flex items-center justify-between transition hover:shadow-md"
-        >
-          <div class="view flex items-center w-full gap-3">
-            <input
-              class="toggle h-5 w-5 accent-indigo-600 cursor-pointer"
-              type="checkbox"
-            />
-            <label class="content flex-1 text-sm break-words"></label>
-            <button
-              class="destroy opacity-0 group-hover:opacity-100 transition text-slate-400 hover:text-red-600 text-lg leading-none"
-              aria-label="Delete"
-            >
-              ❌
-            </button>
-          </div>
-        </li>
-      </template>
-    </main>
+    <template id="todo-template">
+      <li>
+        <div class="view">
+          <input class="toggle" type="checkbox" />
+          <label class="content"></label>
+          <button class="destroy">❌</button>
+        </div>
+      </li>
+    </template>
   </body>
 </html>
