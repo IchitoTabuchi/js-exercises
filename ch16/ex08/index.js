@@ -1,11 +1,13 @@
+import dotenv from 'dotenv';
 import https from 'https';
 import readline from 'readline';
 
 // GitHub API の設定
 const GITHUB_API = 'api.github.com';
-const OWNER = process.env.GITHUB_OWNER || 'owner';
-const REPO = process.env.GITHUB_REPO || 'repo';
-const TOKEN = process.env.GITHUB_TOKEN || '';
+dotenv.config();
+const OWNER = process.env.GITHUB_OWNER;
+const REPO = process.env.GITHUB_REPO;
+const TOKEN = process.env.GITHUB_TOKEN;
 let verbose = false;
 
 // HTTPSリクエストを実行する関数
@@ -18,11 +20,11 @@ const makeRequest = (method, path, data = null) =>
       method: method,
       headers: {
         'User-Agent': 'Node.js GitHub Issue CLI',
+        Authorization: `Bearer ${TOKEN}`,
         Accept: 'application/vnd.github+json',
         'X-GitHub-Api-Version': '2022-11-28',
       },
     };
-    if (TOKEN) options.headers['Authorization'] = `Bearer ${TOKEN}`;
     if (data) {
       const jsonData = JSON.stringify(data);
       options.headers['Content-Type'] = 'application/json';

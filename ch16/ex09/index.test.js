@@ -1,6 +1,4 @@
 import fs from 'fs';
-import assert from 'node:assert';
-import { afterEach, beforeEach, describe, it } from 'node:test';
 import path from 'path';
 import request from 'supertest';
 import { serve } from './server.js';
@@ -39,69 +37,69 @@ describe('Express HTTP Server', () => {
   // 静的ファイル配信のテスト
   it('存在しないファイルにGETリクエストすると404を返すこと', async () => {
     const res = await request(app).get('/');
-    assert.strictEqual(res.status, 404);
+    expect(res.status).toBe(404);
   });
 
   it('txtファイルが正しく配信されること', async () => {
     const res = await request(app).get('/test.txt');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.headers['content-type'], 'text/plain');
-    assert.strictEqual(res.text, 'Hello, World!');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('text/plain');
+    expect(res.text).toBe('Hello, World!');
   });
 
   it('HTMLファイルが正しく配信されること', async () => {
     const res = await request(app).get('/test.html');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.headers['content-type'], 'text/html');
-    assert.strictEqual(res.text, '<html><body>Test</body></html>');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('text/html');
+    expect(res.text).toBe('<html><body>Test</body></html>');
   });
 
   it('JavaScriptファイルが正しく配信されること', async () => {
     const res = await request(app).get('/test.js');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.headers['content-type'], 'application/javascript');
-    assert.strictEqual(res.text, 'console.log("test");');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('application/javascript');
+    expect(res.text).toBe('console.log("test");');
   });
 
   it('CSSファイルが正しく配信されること', async () => {
     const res = await request(app).get('/test.css');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.headers['content-type'], 'text/css');
-    assert.strictEqual(res.text, 'body { margin: 0; }');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('text/css');
+    expect(res.text).toBe('body { margin: 0; }');
   });
 
   it('PNGファイルが正しく配信されること', async () => {
     const res = await request(app).get('/test.png');
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(res.headers['content-type'], 'image/png');
-    assert.ok(res.body instanceof Buffer);
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('image/png');
+    expect(res.body).toBeInstanceOf(Buffer);
   });
 
   it('存在しないファイルにアクセスすると404を返すこと', async () => {
     const res = await request(app).get('/nonexistent.txt');
-    assert.strictEqual(res.status, 404);
-    assert.match(res.text, /ENOENT/);
+    expect(res.status).toBe(404);
+    expect(res.text).toMatch(/ENOENT/);
   });
 
   it('ディレクトリトラバーサル攻撃が防がれていること', async () => {
     const res = await request(app).get('/../etc/passwd');
-    assert.strictEqual(res.status, 404);
+    expect(res.status).toBe(404);
   });
 
   it('GETメソッド以外でファイルアクセスすると405を返すこと', async () => {
     const res = await request(app).post('/test.txt');
-    assert.strictEqual(res.status, 405);
-    assert.match(res.text, /Method Not Allowed/);
+    expect(res.status).toBe(405);
+    expect(res.text).toMatch(/Method Not Allowed/);
   });
 
   it('PUTメソッドでファイルアクセスすると405を返すこと', async () => {
     const res = await request(app).put('/test.txt').send('data');
-    assert.strictEqual(res.status, 405);
+    expect(res.status).toBe(405);
   });
 
   it('DELETEメソッドでファイルアクセスすると405を返すこと', async () => {
     const res = await request(app).delete('/test.txt');
-    assert.strictEqual(res.status, 405);
+    expect(res.status).toBe(405);
   });
 
   // /test/mirror エンドポイントのテスト
@@ -110,35 +108,32 @@ describe('Express HTTP Server', () => {
       .get('/test/mirror')
       .set('X-Custom-Header', 'test-value');
 
-    assert.strictEqual(res.status, 200);
-    assert.strictEqual(
-      res.headers['content-type'],
-      'text/plain; charset=utf-8'
-    );
-    assert.match(res.text, /GET \/test\/mirror HTTP/);
-    assert.match(res.text, /x-custom-header: test-value/);
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toBe('text/plain; charset=utf-8');
+    expect(res.text).toMatch(/GET \/test\/mirror HTTP/);
+    expect(res.text).toMatch(/x-custom-header: test-value/);
   });
 
   it('/test/mirror POSTリクエストのボディを返すこと', async () => {
     const testData = 'This is test data';
     const res = await request(app).post('/test/mirror').send(testData);
 
-    assert.strictEqual(res.status, 200);
-    assert.match(res.text, /POST \/test\/mirror HTTP/);
-    assert.match(res.text, new RegExp(testData));
+    expect(res.status).toBe(200);
+    expect(res.text).toMatch(/POST \/test\/mirror HTTP/);
+    expect(res.text).toMatch(new RegExp(testData));
   });
 
   it('/test/mirror PUTリクエストのボディを返すこと', async () => {
     const res = await request(app).put('/test/mirror').send('PUT test data');
 
-    assert.strictEqual(res.status, 200);
-    assert.match(res.text, /PUT \/test\/mirror HTTP/);
+    expect(res.status).toBe(200);
+    expect(res.text).toMatch(/PUT \/test\/mirror HTTP/);
   });
 
   it('/test/mirror DELETEリクエストも処理すること', async () => {
     const res = await request(app).delete('/test/mirror');
 
-    assert.strictEqual(res.status, 200);
-    assert.match(res.text, /DELETE \/test\/mirror HTTP/);
+    expect(res.status).toBe(200);
+    expect(res.text).toMatch(/DELETE \/test\/mirror HTTP/);
   });
 });

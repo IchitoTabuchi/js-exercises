@@ -7,6 +7,16 @@
 - `-h`または`--help`オプションで使い方が確認できる
 - `-v`または`--verbose`オプションで HTTP ログを出力する
 
+## 環境変数
+
+ex08 ディレクトリに `.env` ファイルを作成し、以下の環境変数を設定すること。
+
+```bash
+GITHUB_OWNER=your-github-username
+GITHUB_REPO=your-repository-name
+GITHUB_TOKEN=your-personal-access-token
+```
+
 ## コマンド
 
 ### コマンドラインツールの起動

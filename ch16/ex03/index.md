@@ -12,7 +12,7 @@
 
 ## 実行結果
 
-key.json と　encryptedData.json が作成された。
+key.json と　encryptedData.json が作成され、暗号化と復号化が実行されていることが確認できた。
 
 ![alt text](image.png)
 
