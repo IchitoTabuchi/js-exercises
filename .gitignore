@@ -3,3 +3,4 @@ test-results
 *.tsbuildinfo
 exercises
 .env
+__recordings__/

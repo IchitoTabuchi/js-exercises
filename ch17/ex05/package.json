@@ -1,0 +1,12 @@
+{
+  "name": "ex05",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "^5.105.2"
+  }
+}

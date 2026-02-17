@@ -11,6 +11,9 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-flow": "^7.27.1",
     "@playwright/test": "^1.44.1",
     "@types/acorn": "^4.0.6",
     "@types/jest": "^29.5.14",

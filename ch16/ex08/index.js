@@ -41,7 +41,7 @@ const makeRequest = (method, path, data = null) =>
       if (verbose) {
         console.error(`[HTTP] Status: ${res.statusCode} ${res.statusMessage}`);
         console.error(
-          `[HTTP] Headers: ${JSON.stringify(res.headers, null, 2)}`
+          `[HTTP] Headers: ${JSON.stringify(res.headers, null, 2)}`,
         );
       }
       res.on('data', (chunk) => (body += chunk));
@@ -56,7 +56,7 @@ const makeRequest = (method, path, data = null) =>
           }
         } else {
           reject(
-            new Error(`HTTP ${res.statusCode}: ${res.statusMessage}\n${body}`)
+            new Error(`HTTP ${res.statusCode}: ${res.statusMessage}\n${body}`),
           );
         }
       });
@@ -82,7 +82,7 @@ const closeIssue = async (issueNumber) => {
   const result = await makeRequest(
     'PATCH',
     `/repos/${OWNER}/${REPO}/issues/${issueNumber}`,
-    data
+    data,
   );
   console.log(`Issue closed: #${result.number} - ${result.title}`);
 };
@@ -91,7 +91,7 @@ const closeIssue = async (issueNumber) => {
 const listOpenIssues = async () => {
   const result = await makeRequest(
     'GET',
-    `/repos/${OWNER}/${REPO}/issues?state=open`
+    `/repos/${OWNER}/${REPO}/issues?state=open`,
   );
   if (result.length === 0) {
     console.log('No open issues found.');
@@ -171,7 +171,7 @@ const rl = readline.createInterface({
 });
 
 console.log('GitHub Issue CLI (Interactive mode)');
-console.log('Type "help" for commands, "q" to quit\n');
+console.log('Type "-h" for commands, "quit" to quit\n');
 
 rl.prompt();
 
